@@ -1,0 +1,447 @@
+
+<!doctype html>
+<html ⚡ lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AMP Mobile Nav</title>
+    <link rel="canonical" href="index.php">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <style amp-boilerplate>
+        body {
+            -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+            -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+            -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+            animation: -amp-start 8s steps(1, end) 0s 1 normal both
+        }
+        
+        @-webkit-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+            to {
+                visibility: visible
+            }
+        }
+        
+        @-moz-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+            to {
+                visibility: visible
+            }
+        }
+        
+        @-ms-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+            to {
+                visibility: visible
+            }
+        }
+        
+        @-o-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+            to {
+                visibility: visible
+            }
+        }
+        
+        @keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+            to {
+                visibility: visible
+            }
+        }
+    </style>
+    <noscript>
+        <style amp-boilerplate>
+            body {
+                -webkit-animation: none;
+                -moz-animation: none;
+                -ms-animation: none;
+                animation: none
+            }
+        </style>
+    </noscript>
+
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
+    <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+
+    <style amp-custom>
+        body {
+            width: auto;
+            margin: 0;
+            padding: 0;
+            background: lightgrey;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .headerbar {
+            background: #ffffff;
+            height: 50px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .hamburger,
+        .site-name {
+            flex: 1 1 auto;
+            padding: 10px;
+        }
+        
+        amp-sidebar,
+        amp-sidebar .submenu {
+            width: 100%;
+            height: 100%;
+        }
+        
+        amp-sidebar .main-menu,
+        amp-sidebar .submenu {
+            overflow: auto;
+        }
+        
+        amp-sidebar .submenu {
+            top: 0;
+            left: 0;
+            position: fixed;
+        }
+        
+        amp-sidebar .hide-submenu {
+            visibility: hidden;
+            transform: translateX(-100%);
+        }
+        
+        amp-sidebar .show-submenu {
+            visibility: visible;
+            transform: translateX(0);
+        }
+        
+        amp-sidebar .hide-parent {
+            visibility: hidden;
+        }
+        
+        amp-sidebar .truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        amp-sidebar .link-container {
+            display: block;
+            height: 44px;
+            line-height: 44px;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 0 1rem;
+        }
+        
+        amp-sidebar a {
+            min-width: 44px;
+            min-height: 44px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        amp-sidebar .submenu-icon {
+            padding-right: 44px;
+        }
+        
+        amp-sidebar .submenu-icon::after {
+            position: absolute;
+            right: 0;
+            height: 44px;
+            width: 44px;
+            content: '';
+            background-size: 1rem;
+            background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        amp-sidebar .controls {
+            display: flex;
+            height: 50px;
+            background: #f0f0f0;
+        }
+        
+        amp-sidebar .controls a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        amp-sidebar .controls span {
+            line-height: 50px;
+            margin: 0 auto;
+        }
+        
+        amp-sidebar nav>.controls>a:first-of-type {
+            visibility: hidden;
+        }
+        
+        amp-sidebar .controls a svg {
+            height: 1rem;
+            width: 1rem;
+        }
+        
+        amp-sidebar .link-icon {
+            float: left;
+            height: 44px;
+            margin-right: 0.75rem;
+        }
+        
+        amp-sidebar .link-icon>svg {
+            height: 44px;
+        }
+        
+        amp-sidebar {
+            background: #fff;
+            color: #232323;
+            fill: #232323;
+            text-transform: uppercase;
+            letter-spacing: 0.18rem;
+            font-size: 0.875rem;
+        }
+        
+        amp-sidebar a {
+            color: #232323;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        
+        div[class*="-sidebar-mask"] {
+            opacity: 0.8;
+        }
+        
+        amp-sidebar a:hover {
+            text-decoration: underline;
+            fill: #232323;
+        }
+        
+        amp-sidebar .view-all {
+            font-style: italic;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <amp-sidebar id='header-sidebar' side='left' layout='nodisplay'>
+        <nav>
+
+            <div class="controls" [class]="hidePrimary ? 'controls hide-parent' : 'controls'" aria-label="Menu controls">
+                <a tabindex="0" role="button" aria-label="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+                    </svg>
+                </a>
+                <span class="truncate">Menu</span>
+                <a tabindex="0" role="button" on='tap:header-sidebar.toggle' aria-label="Close Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="main-menu items" role="menu" aria-label="Menu links" [class]="hidePrimary ? 'main-menu items hide-parent' : 'main-menu items'">
+
+                <a class="link-container submenu-icon truncate" role="menuitem" tabindex="0" aria-label="Mens" aria-haspopup="true" on="tap:AMP.setState({level_1_0: !level_1_0, hidePrimary: !hidePrimary})" title="Mens">
+                                                        Mens                        </a>
+
+                <div class="submenu hide-submenu" [class]="(level_1_0 ? 'submenu show-submenu' : 'submenu hide-submenu') + ' ' + (hideSecondary ? 'hide-parent' : '')" role="menu" aria-label="Mens">
+                    <div class="controls" [class]="hideSecondary ? 'controls hide-parent' : 'controls'" aria-label="Mens controls">
+                        <a tabindex="0" role="button" on="tap:AMP.setState({level_1_0: !level_1_0, hidePrimary: !hidePrimary})" aria-label="Return to Menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+                            </svg>
+                        </a>
+                        <span class="truncate">Mens</span>
+                        <a tabindex="0" role="button" on='tap:header-sidebar.toggle' aria-label="Close Mens">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Clothing">
+                                                                                Clothing                                    </a>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Footwear">
+                                                                                Footwear                                    </a>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Accessories">
+                                                                                Accessories                                    </a>
+
+                    <a class="link-container view-all truncate" href="/link" title="Mens">
+                                    View All Mens                                </a>
+
+                </div>
+
+                <a class="link-container submenu-icon truncate" role="menuitem" tabindex="0" aria-label="Womens" aria-haspopup="true" on="tap:AMP.setState({level_1_1: !level_1_1, hidePrimary: !hidePrimary})" title="Womens">
+                                                        Womens                        </a>
+
+                <div class="submenu hide-submenu" [class]="(level_1_1 ? 'submenu show-submenu' : 'submenu hide-submenu') + ' ' + (hideSecondary ? 'hide-parent' : '')" role="menu" aria-label="Womens">
+                    <div class="controls" [class]="hideSecondary ? 'controls hide-parent' : 'controls'" aria-label="Womens controls">
+                        <a tabindex="0" role="button" on="tap:AMP.setState({level_1_1: !level_1_1, hidePrimary: !hidePrimary})" aria-label="Return to Menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+                            </svg>
+                        </a>
+                        <span class="truncate">Womens</span>
+                        <a tabindex="0" role="button" on='tap:header-sidebar.toggle' aria-label="Close Womens">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Clothing">
+                                                                                Clothing                                    </a>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Footwear">
+                                                                                Footwear                                    </a>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Accessories">
+                                                                                Accessories                                    </a>
+
+                    <a class="link-container view-all truncate" href="/link" title="Womens">
+                                    View All Womens                                </a>
+
+                </div>
+
+                <a class="link-container submenu-icon truncate" role="menuitem" tabindex="0" aria-label="Kids" aria-haspopup="true" on="tap:AMP.setState({level_1_2: !level_1_2, hidePrimary: !hidePrimary})" title="Kids">
+                                                        Kids                        </a>
+
+                <div class="submenu hide-submenu" [class]="(level_1_2 ? 'submenu show-submenu' : 'submenu hide-submenu') + ' ' + (hideSecondary ? 'hide-parent' : '')" role="menu" aria-label="Kids">
+                    <div class="controls" [class]="hideSecondary ? 'controls hide-parent' : 'controls'" aria-label="Kids controls">
+                        <a tabindex="0" role="button" on="tap:AMP.setState({level_1_2: !level_1_2, hidePrimary: !hidePrimary})" aria-label="Return to Menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+                            </svg>
+                        </a>
+                        <span class="truncate">Kids</span>
+                        <a tabindex="0" role="button" on='tap:header-sidebar.toggle' aria-label="Close Kids">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Clothing">
+                                                                                Clothing                                    </a>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Footwear">
+                                                                                Footwear                                    </a>
+
+                    <a class="link-container truncate" tabindex="0" href="/link" title="Accessories">
+                                                                                Accessories                                    </a>
+
+                    <a class="link-container view-all truncate" href="/link" title="Kids">
+                                    View All Kids                                </a>
+
+                </div>
+
+                <a class="link-container submenu-icon truncate" role="menuitem" tabindex="0" aria-label="Brands" aria-haspopup="true" on="tap:AMP.setState({level_1_3: !level_1_3, hidePrimary: !hidePrimary})" title="Brands">
+                                                        Brands                        </a>
+
+                <div class="submenu hide-submenu" [class]="(level_1_3 ? 'submenu show-submenu' : 'submenu hide-submenu') + ' ' + (hideSecondary ? 'hide-parent' : '')" role="menu" aria-label="Brands">
+                    <div class="controls" [class]="hideSecondary ? 'controls hide-parent' : 'controls'" aria-label="Brands controls">
+                        <a tabindex="0" role="button" on="tap:AMP.setState({level_1_3: !level_1_3, hidePrimary: !hidePrimary})" aria-label="Return to Menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+                            </svg>
+                        </a>
+                        <span class="truncate">Brands</span>
+                        <a tabindex="0" role="button" on='tap:header-sidebar.toggle' aria-label="Close Brands">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <a class="link-container submenu-icon truncate" role="menuitem" tabindex="0" aria-label="A-B" aria-haspopup="true" on="tap:AMP.setState({level_2_0: !level_2_0, hideSecondary: !hideSecondary})" title="A-B">
+                                                                                A-B                                    </a>
+
+                    <div class="submenu hide-submenu" [class]="(level_2_0 ? 'submenu show-submenu' : 'submenu hide-submenu') + ' ' + (hideTertiary ? 'hide-parent' : '')" role="menu" aria-label="A-B">
+                        <div class="controls" [class]="hideTertiary ? 'controls hide-parent' : 'controls'" aria-label="A-B controls">
+                            <a tabindex="0" role="button" on="tap:AMP.setState({level_2_0: !level_2_0, hideSecondary: !hideSecondary})" aria-label="Return to Brands">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+                                </svg>
+                            </a>
+                            <span class="truncate">A-B</span>
+                            <a tabindex="0" role="button" on='tap:header-sidebar.toggle' aria-label="Close A-B">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                                </svg>
+                            </a>
+                        </div>
+
+                        <a class="link-container truncate" tabindex="0" href="/link" title="Armani">
+                                                                                                        Armani                                                </a>
+
+                        <a class="link-container truncate" tabindex="0" href="/link" title="BOSS">
+                                                                                                        BOSS                                                </a>
+
+                    </div>
+
+                    <a class="link-container submenu-icon truncate" role="menuitem" tabindex="0" aria-label="C-F" aria-haspopup="true" on="tap:AMP.setState({level_2_1: !level_2_1, hideSecondary: !hideSecondary})" title="C-F">
+                                                                                C-F                                    </a>
+
+                    <div class="submenu hide-submenu" [class]="(level_2_1 ? 'submenu show-submenu' : 'submenu hide-submenu') + ' ' + (hideTertiary ? 'hide-parent' : '')" role="menu" aria-label="C-F">
+                        <div class="controls" [class]="hideTertiary ? 'controls hide-parent' : 'controls'" aria-label="C-F controls">
+                            <a tabindex="0" role="button" on="tap:AMP.setState({level_2_1: !level_2_1, hideSecondary: !hideSecondary})" aria-label="Return to Brands">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+                                </svg>
+                            </a>
+                            <span class="truncate">C-F</span>
+                            <a tabindex="0" role="button" on='tap:header-sidebar.toggle' aria-label="Close C-F">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                                </svg>
+                            </a>
+                        </div>
+
+                        <a class="link-container truncate" tabindex="0" href="/link" title="Channel">
+                                                                                                        Channel                                                </a>
+
+                        <a class="link-container truncate" tabindex="0" href="/link" title="CK Jeans">
+                                                                                                        CK Jeans                                                </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </amp-sidebar>
+
+    <header class="headerbar">
+        <div class="hamburger" role="button" aria-label="mobile menu" on="tap:header-sidebar.toggle" tabindex="0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z" />
+            </svg>
+        </div>
+        <div class="site-name">AMP Mobile Nav</div>
+    </header>
+
+    <div class="info">
+        
+    </div>
+
+</body>
+
+</html>
+
+
